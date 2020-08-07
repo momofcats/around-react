@@ -1,10 +1,9 @@
 import React from "react";
 import logo from "./logo.svg";
-import "./App.css";
 
 function App() {
 	return (
-		<div className="page">
+		<>
 			<header className="header">
 				<img src="images/logo.svg" alt="logo" className="header__logo" />
 			</header>
@@ -39,7 +38,7 @@ function App() {
 			<div className="popup popup_background_light js-popup-profile">
 				<div className="popup__container popup__container_type_form">
 					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="profile" novalidate>
+					<form className="form" action="#" name="profile" noValidate>
 						<h2 className="form__title">Edit profile</h2>
 						<input
 							id="name-input"
@@ -49,8 +48,8 @@ function App() {
 							className="form__input js-input-name"
 							name="name"
 							placeholder="Name"
-							minlength="2"
-							maxlength="40"
+							minLength="2"
+							maxLength="40"
 						/>
 						<span id="name-input-error" className="form__input-error"></span>
 						<input
@@ -60,8 +59,8 @@ function App() {
 							className="form__input js-input-job"
 							name="about"
 							placeholder="About me"
-							minlength="2"
-							maxlength="200"
+							minLength="2"
+							maxLength="200"
 						/>
 						<span id="job-input-error" className="form__input-error"></span>
 						<button className="form__submit-btn" type="submit" data-text="Save">
@@ -73,7 +72,7 @@ function App() {
 			<div className="popup popup_background_light js-popup-photo-form">
 				<div className="popup__container popup__container_type_form">
 					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="new place" novalidate>
+					<form className="form" action="#" name="new place" noValidate>
 						<h2 className="form__title">New Place</h2>
 						<input
 							id="title-input"
@@ -81,8 +80,8 @@ function App() {
 							className="form__input js-input-title"
 							name="name"
 							placeholder="Title"
-							minlength="1"
-							maxlength="30"
+							minLength="1"
+							maxLength="30"
 							required
 						/>
 						<span id="title-input-error" className="form__input-error"></span>
@@ -115,7 +114,7 @@ function App() {
 			<div className="popup popup_background_light js-popup-del-card">
 				<div className="popup__container popup__container_type_form">
 					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="delete card" novalidate>
+					<form className="form" action="#" name="delete card" noValidate>
 						<h2 className="form__title">Are you sure?</h2>
 						<button className="form__submit-btn" type="submit">
 							Yes
@@ -126,7 +125,7 @@ function App() {
 			<div className="popup popup_background_light js-popup-change-avatar">
 				<div className="popup__container popup__container_type_form">
 					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="delete card" novalidate>
+					<form className="form" action="#" name="delete card" noValidate>
 						<h2 className="form__title">Change profile picture</h2>
 						<input
 							id="avatar-input"
@@ -156,7 +155,7 @@ function App() {
 					</div>
 				</li>
 			</template>
-		</div>
+		</>
 	);
 }
 
