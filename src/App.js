@@ -1,11 +1,12 @@
 import React from "react";
-import logo from "./logo.svg";
+import logo from "./images/logo.svg";
+
 
 function App() {
 	return (
 		<>
 			<header className="header">
-				<img src="images/logo.svg" alt="logo" className="header__logo" />
+				<img src={logo} alt="logo" className="header__logo" />
 			</header>
 			<main>
 				<section className="profile page__section">
