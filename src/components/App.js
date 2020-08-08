@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import Main from './Main'
+import Footer from './Footer';
 
 
 function App() {
@@ -8,9 +9,7 @@ function App() {
 		<>
 			<Header />
 			<Main />
-			<footer className="footer page__section">
-				<p className="footer__copyright">&#169; 2020 Around The U.S.</p>
-			</footer>
+			<Footer />
 			<div className="popup popup_background_light js-popup-profile">
 				<div className="popup__container popup__container_type_form">
 					<button className="popup__btn-close button" type="button"></button>
