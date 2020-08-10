@@ -1,122 +1,116 @@
-import React from 'react';
-import Header from './Header';
-import Main from './Main'
-import Footer from './Footer';
-
+import React from "react";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
+	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
+		false
+	);
+	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
+		false
+	);
+
+	function handleEditAvatarClick() {
+		setIsEditAvatarPopupOpen(true);
+	}
+
+	function handleEditProfileClick() {
+		setIsEditProfilePopupOpen(true);
+	}
+
+	function handleAddPlaceClick() {
+		setIsAddPlacePopupOpen(true);
+	}
+
 	return (
 		<>
 			<Header />
-			<Main />
+			<Main
+				onEditProfile={handleEditProfileClick}
+				onAddPlace={handleAddPlaceClick}
+				onEditAvatar={handleEditAvatarClick}
+			/>
 			<Footer />
-			<div className="popup popup_background_light js-popup-profile">
-				<div className="popup__container popup__container_type_form">
-					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="profile" noValidate>
-						<h2 className="form__title">Edit profile</h2>
-						<input
-							id="name-input"
-							required
-							pattern="[a-zA-Z\s\-]+"
-							type="text"
-							className="form__input js-input-name"
-							name="name"
-							placeholder="Name"
-							minLength="2"
-							maxLength="40"
-						/>
-						<span id="name-input-error" className="form__input-error"></span>
-						<input
-							id="job-input"
-							required
-							type="text"
-							className="form__input js-input-job"
-							name="about"
-							placeholder="About me"
-							minLength="2"
-							maxLength="200"
-						/>
-						<span id="job-input-error" className="form__input-error"></span>
-						<button className="form__submit-btn" type="submit" data-text="Save">
-							Save
-						</button>
-					</form>
-				</div>
-			</div>
-			<div className="popup popup_background_light js-popup-photo-form">
-				<div className="popup__container popup__container_type_form">
-					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="new place" noValidate>
-						<h2 className="form__title">New Place</h2>
-						<input
-							id="title-input"
-							type="text"
-							className="form__input js-input-title"
-							name="name"
-							placeholder="Title"
-							minLength="1"
-							maxLength="30"
-							required
-						/>
-						<span id="title-input-error" className="form__input-error"></span>
-						<input
-							id="link-input"
-							type="url"
-							className="form__input js-input-link"
-							name="link"
-							placeholder="Image link"
-							required
-						/>
-						<span id="link-input-error" className="form__input-error"></span>
-						<button
-							className="form__submit-btn"
-							type="submit"
-							data-text="Create"
-						>
-							Create
-						</button>
-					</form>
-				</div>
-			</div>
-			<div className="popup popup_background_dark js-popup-picture">
-				<div className="popup__container popup__container_type_picture">
-					<button className="popup__btn-close button" type="button"></button>
-					<img className="popup__image" />
-					<h2 className="popup__title"></h2>
-				</div>
-			</div>
-			<div className="popup popup_background_light js-popup-del-card">
-				<div className="popup__container popup__container_type_form">
-					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="delete card" noValidate>
-						<h2 className="form__title">Are you sure?</h2>
-						<button className="form__submit-btn" type="submit">
-							Yes
-						</button>
-					</form>
-				</div>
-			</div>
-			<div className="popup popup_background_light js-popup-change-avatar">
-				<div className="popup__container popup__container_type_form">
-					<button className="popup__btn-close button" type="button"></button>
-					<form className="form" action="#" name="delete card" noValidate>
-						<h2 className="form__title">Change profile picture</h2>
-						<input
-							id="avatar-input"
-							type="url"
-							className="form__input js-input-link"
-							name="avatar"
-							placeholder="Url"
-							required
-						/>
-						<span id="avatar-input-error" className="form__input-error"></span>
-						<button className="form__submit-btn" type="submit" data-text="Save">
-							Save
-						</button>
-					</form>
-				</div>
-			</div>
+			<PopupWithForm
+				name="profile"
+				title="Edit profile"
+				buttonText="Save"
+				isOpen={isEditProfilePopupOpen}
+			>
+				<input
+					id="name-input"
+					required
+					pattern="[a-zA-Z\s\-]+"
+					type="text"
+					className="form__input js-input-name"
+					name="name"
+					placeholder="Name"
+					minlength="2"
+					maxlength="40"
+				/>
+				<span id="name-input-error" className="form__input-error"></span>
+				<input
+					id="job-input"
+					required
+					type="text"
+					className="form__input js-input-job"
+					name="about"
+					placeholder="About me"
+					minLength="2"
+					maxLength="200"
+				/>
+				<span id="job-input-error" class="form__input-error"></span>
+			</PopupWithForm>
+			<PopupWithForm
+				name="photo-form"
+				title="New Place"
+				buttonText="Create"
+				isOpen={isAddPlacePopupOpen}
+			>
+				<input
+					id="title-input"
+					type="text"
+					className="form__input js-input-title"
+					name="name"
+					placeholder="Title"
+					minlength="1"
+					maxlength="30"
+					required
+				/>
+				<span id="title-input-error" className="form__input-error"></span>
+				<input
+					id="link-input"
+					type="url"
+					className="form__input js-input-link"
+					name="link"
+					placeholder="Image link"
+					required
+				/>
+				<span id="link-input-error" className="form__input-error"></span>{" "}
+			</PopupWithForm>
+			<PopupWithForm
+				name="change-avatar"
+				title="Change profile picture"
+				buttonText="Save"
+				isOpen={isEditAvatarPopupOpen}
+			>
+				<input
+					id="avatar-input"
+					type="url"
+					className="form__input js-input-link"
+					name="avatar"
+					placeholder="Url"
+					required
+				/>
+				<span id="avatar-input-error" className="form__input-error"></span>
+			</PopupWithForm>
+			<PopupWithForm name="del-card" title="Are you sure?" buttonText="Yes" />
+			<ImagePopup />
+
 			<template className="js-card-template">
 				<li className="card">
 					<button className="button card__del"></button>
