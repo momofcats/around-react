@@ -49,8 +49,8 @@ function App() {
 					className="form__input js-input-name"
 					name="name"
 					placeholder="Name"
-					minlength="2"
-					maxlength="40"
+					minLength="2"
+					maxLength="40"
 				/>
 				<span id="name-input-error" className="form__input-error"></span>
 				<input
@@ -63,7 +63,7 @@ function App() {
 					minLength="2"
 					maxLength="200"
 				/>
-				<span id="job-input-error" class="form__input-error"></span>
+				<span id="job-input-error" className="form__input-error"></span>
 			</PopupWithForm>
 			<PopupWithForm
 				name="photo-form"
@@ -77,8 +77,8 @@ function App() {
 					className="form__input js-input-title"
 					name="name"
 					placeholder="Title"
-					minlength="1"
-					maxlength="30"
+					minLength="1"
+					maxLength="30"
 					required
 				/>
 				<span id="title-input-error" className="form__input-error"></span>
