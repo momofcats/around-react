@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -6,13 +6,9 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
-	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(
-		false
-	);
-	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(
-		false
-	);
+	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -24,6 +20,12 @@ function App() {
 
 	function handleAddPlaceClick() {
 		setIsAddPlacePopupOpen(true);
+	}
+
+	function closeAllPopups() {
+		setIsEditAvatarPopupOpen(false);
+		setIsEditProfilePopupOpen(false);
+		setIsAddPlacePopupOpen(false);
 	}
 
 	return (
@@ -40,6 +42,7 @@ function App() {
 				title="Edit profile"
 				buttonText="Save"
 				isOpen={isEditProfilePopupOpen}
+				onClose={closeAllPopups}
 			>
 				<input
 					id="name-input"
@@ -70,6 +73,7 @@ function App() {
 				title="New Place"
 				buttonText="Create"
 				isOpen={isAddPlacePopupOpen}
+				onClose={closeAllPopups}
 			>
 				<input
 					id="title-input"
@@ -97,6 +101,7 @@ function App() {
 				title="Change profile picture"
 				buttonText="Save"
 				isOpen={isEditAvatarPopupOpen}
+				onClose={closeAllPopups}
 			>
 				<input
 					id="avatar-input"
