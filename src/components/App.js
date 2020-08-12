@@ -6,6 +6,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
+
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -34,13 +35,14 @@ function App() {
 		}
 	}
 
+	
 	useEffect(() => {
 		document.addEventListener("keydown", handleEscKey);
 
 		return () => {
 			document.removeEventListener("keydown", handleEscKey);
 		};
-	}, []);
+	});
 	return (
 		<>
 			<Header />
