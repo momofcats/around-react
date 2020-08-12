@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -28,6 +28,19 @@ function App() {
 		setIsAddPlacePopupOpen(false);
 	}
 
+	function handleEscKey(evt) {
+		if (evt.key === "Escape") {
+			closeAllPopups();
+		}
+	}
+
+	useEffect(() => {
+		document.addEventListener("keydown", handleEscKey);
+
+		return () => {
+			document.removeEventListener("keydown", handleEscKey);
+		};
+	}, []);
 	return (
 		<>
 			<Header />

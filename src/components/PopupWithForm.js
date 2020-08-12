@@ -1,11 +1,11 @@
 import React from "react";
 
 function PopupWithForm(props) {
-  function handleOverlayClick(evt) {
-    if (evt.target.classList.contains("popup_role_show")) {
-      props.onClose();
-    }
-  }
+	function handleOverlayClick(evt) {
+		if (evt.target.classList.contains("popup_role_show")) {
+			props.onClose();
+		}
+	}
 
 	return (
 		<div
