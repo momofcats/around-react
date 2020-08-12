@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import api from "../utils/Api";
+import Card from './Card';
 
 function Main(props) {
 	const [userName, setUserName] = useState("");
 	const [userDescription, setUserDescription] = useState("");
 	const [userAvatar, setUserAvatar] = useState("");
+	const [cards, setCards] = useState([]);
+
+	
+
 
 	useEffect(() => {
 		api.getUserInfo().then((res) => {
@@ -12,7 +17,14 @@ function Main(props) {
 			setUserDescription(res.about);
 			setUserAvatar(res.avatar);
 		});
-	});
+	},[]);
+
+	useEffect(() => {
+		api.getInitialCards().then((res) => {
+		setCards(res);
+		})
+	},[]);
+	
 	return (
 		<main>
 			<section className="profile page__section">
@@ -47,7 +59,11 @@ function Main(props) {
 					type="button"
 				></button>
 			</section>
-			<ul className="gallery page__section"></ul>
+			<ul className="gallery page__section">
+			{
+				cards.map((card,id) => <Card key={id} {...card} />)
+			}
+			</ul>
 		</main>
 	);
 }

@@ -5,11 +5,13 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
+
 function App() {
 
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+	
 
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -43,6 +45,8 @@ function App() {
 			document.removeEventListener("keydown", handleEscKey);
 		};
 	});
+
+	
 	return (
 		<>
 			<Header />
@@ -130,20 +134,6 @@ function App() {
 			</PopupWithForm>
 			<PopupWithForm name="del-card" title="Are you sure?" buttonText="Yes" />
 			<ImagePopup />
-
-			<template className="js-card-template">
-				<li className="card">
-					<button className="button card__del"></button>
-					<div className="card__img"></div>
-					<div className="card__description-wrapper">
-						<h2 className="card__title"></h2>
-						<div className="card__likes-container">
-							<button className="card__like button"></button>
-							<p className="card__likes"></p>
-						</div>
-					</div>
-				</li>
-			</template>
 		</>
 	);
 }
