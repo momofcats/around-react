@@ -11,7 +11,11 @@ function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-	
+	const [isDelCardPopupOpen, setIsDelCardPopupOpen] = useState(false);
+
+	function handleDelCardClick() {
+		setIsDelCardPopupOpen(true);
+	}
 
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -29,6 +33,8 @@ function App() {
 		setIsEditAvatarPopupOpen(false);
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
+		setIsDelCardPopupOpen(false);
+
 	}
 
 	function handleEscKey(evt) {
@@ -54,6 +60,7 @@ function App() {
 				onEditProfile={handleEditProfileClick}
 				onAddPlace={handleAddPlaceClick}
 				onEditAvatar={handleEditAvatarClick}
+				onCloseCard = {handleDelCardClick}
 			/>
 			<Footer />
 			<PopupWithForm
@@ -132,7 +139,7 @@ function App() {
 				/>
 				<span id="avatar-input-error" className="form__input-error"></span>
 			</PopupWithForm>
-			<PopupWithForm name="del-card" title="Are you sure?" buttonText="Yes" />
+			<PopupWithForm name="del-card" title="Are you sure?" buttonText="Yes" isOpen={isDelCardPopupOpen} onClose={closeAllPopups}/>
 			<ImagePopup />
 		</>
 	);
