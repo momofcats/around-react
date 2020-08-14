@@ -53,7 +53,12 @@ function Main(props) {
 			</section>
 			<ul className="gallery page__section">
 				{cards.map((card, id) => (
-					<Card key={id} {...card} isOwner={card.isOwner} onDelete={props.onCloseCard}/>
+					<Card
+						key={id}
+						card={card}
+						onDelete={props.onDeleteCard}
+						onCardClick={props.onCardClick}
+					/>
 				))}
 			</ul>
 		</main>

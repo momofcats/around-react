@@ -5,13 +5,18 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
-
 function App() {
-
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 	const [isDelCardPopupOpen, setIsDelCardPopupOpen] = useState(false);
+	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+	const [selectedCard, setSelectedCard] = useState(0);
+
+	function handleCardClick(card) {
+		setSelectedCard(card);
+		setIsImagePopupOpen(true);
+	}
 
 	function handleDelCardClick() {
 		setIsDelCardPopupOpen(true);
@@ -34,7 +39,8 @@ function App() {
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
 		setIsDelCardPopupOpen(false);
-
+		setIsImagePopupOpen(false);
+		setSelectedCard(0);
 	}
 
 	function handleEscKey(evt) {
@@ -43,7 +49,6 @@ function App() {
 		}
 	}
 
-	
 	useEffect(() => {
 		document.addEventListener("keydown", handleEscKey);
 
@@ -52,7 +57,6 @@ function App() {
 		};
 	});
 
-	
 	return (
 		<>
 			<Header />
@@ -60,7 +64,8 @@ function App() {
 				onEditProfile={handleEditProfileClick}
 				onAddPlace={handleAddPlaceClick}
 				onEditAvatar={handleEditAvatarClick}
-				onCloseCard = {handleDelCardClick}
+				onDeleteCard={handleDelCardClick}
+				onCardClick={handleCardClick}
 			/>
 			<Footer />
 			<PopupWithForm
@@ -139,8 +144,18 @@ function App() {
 				/>
 				<span id="avatar-input-error" className="form__input-error"></span>
 			</PopupWithForm>
-			<PopupWithForm name="del-card" title="Are you sure?" buttonText="Yes" isOpen={isDelCardPopupOpen} onClose={closeAllPopups}/>
-			<ImagePopup />
+			<PopupWithForm
+				name="del-card"
+				title="Are you sure?"
+				buttonText="Yes"
+				isOpen={isDelCardPopupOpen}
+				onClose={closeAllPopups}
+			/>
+			<ImagePopup
+				isOpen={isImagePopupOpen}
+				onClose={closeAllPopups}
+				card={selectedCard}
+			/>
 		</>
 	);
 }
