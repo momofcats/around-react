@@ -1,14 +1,9 @@
 # Project 4: Around The U.S.
 
 ### Overview
-- Github pages link
 - Figma
 - Description of the project and its functionality
 - Description of technologies and techniques used
-
-## Github pages link
-
--[Link to Github pages]()
 
 ## Figma
 
