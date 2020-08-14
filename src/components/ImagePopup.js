@@ -20,7 +20,7 @@ function ImagePopup(props) {
 					type="button"
 					onClick={props.onClose}
 				></button>
-				<img className="popup__image" src={card.link} />
+				<img className="popup__image" src={card.link} alt={card.name} />
 				<h2 className="popup__title">{card.name}</h2>
 			</div>
 		</div>
