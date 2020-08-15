@@ -76,7 +76,6 @@ function App() {
 				onClose={closeAllPopups}
 			>
 				<input
-					id="name-input"
 					required
 					pattern="[a-zA-Z\s\-]+"
 					type="text"
@@ -86,9 +85,7 @@ function App() {
 					minLength="2"
 					maxLength="40"
 				/>
-				<span id="name-input-error" className="form__input-error"></span>
 				<input
-					id="job-input"
 					required
 					type="text"
 					className="form__input js-input-job"
@@ -97,7 +94,6 @@ function App() {
 					minLength="2"
 					maxLength="200"
 				/>
-				<span id="job-input-error" className="form__input-error"></span>
 			</PopupWithForm>
 			<PopupWithForm
 				name="photo-form"
@@ -116,16 +112,13 @@ function App() {
 					maxLength="30"
 					required
 				/>
-				<span id="title-input-error" className="form__input-error"></span>
 				<input
-					id="link-input"
 					type="url"
 					className="form__input js-input-link"
 					name="link"
 					placeholder="Image link"
 					required
 				/>
-				<span id="link-input-error" className="form__input-error"></span>{" "}
 			</PopupWithForm>
 			<PopupWithForm
 				name="change-avatar"
@@ -135,14 +128,12 @@ function App() {
 				onClose={closeAllPopups}
 			>
 				<input
-					id="avatar-input"
 					type="url"
 					className="form__input js-input-link"
 					name="avatar"
 					placeholder="Url"
 					required
 				/>
-				<span id="avatar-input-error" className="form__input-error"></span>
 			</PopupWithForm>
 			<PopupWithForm
 				name="del-card"
