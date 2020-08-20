@@ -5,23 +5,14 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main(props) {
 	const currentUser = React.useContext(CurrentUserContext);
-	// const [userName, setUserName] = useState("");
-	// const [userDescription, setUserDescription] = useState("");
-	// const [userAvatar, setUserAvatar] = useState("");
-	// const [cards, setCards] = useState([]);
 
-	// useEffect(() => {
-	// 	api.getAppInfo().then(([cards, userData]) => {
-	// 		setUserName(userData.name);
-	// 		setUserDescription(userData.about);
-	// 		setUserAvatar(userData.avatar);
-	// 		cards.map((card) => {
-	// 			card.isOwner = userData._id === card.owner._id;
-	// 			return card;
-	// 		});
-	// 		setCards(cards);
-	// 	});
-	// }, []);
+	const [cards, setCards] = useState([]);
+
+	useEffect(() => {
+	api.getInitialCards().then((cards) => {
+			setCards(cards);
+		});
+	}, []);
 
 	return (
 		<main>
@@ -54,14 +45,14 @@ function Main(props) {
 				></button>
 			</section>
 			<ul className="gallery page__section">
-				{/* {cards.map((card, id) => (
+				{cards.map((card, id) => (
 					<Card
 						key={id}
 						card={card}
 						onDelete={props.onDeleteCard}
 						onCardClick={props.onCardClick}
 					/>
-				))} */}
+				))}
 			</ul>
 		</main>
 	);

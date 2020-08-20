@@ -1,13 +1,16 @@
 import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card(props) {
+	const currentUser = React.useContext(CurrentUserContext);
 	const card = props.card;
+	const isOwner = card.owner._id === currentUser._id;
 	function handleClick() {
 		props.onCardClick(card);
 	}
 	return (
 		<li className="card">
-			{card.isOwner ? (
+			{isOwner ? (
 				<button
 					type="button"
 					className="button card__del"
