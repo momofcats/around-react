@@ -16,6 +16,24 @@ class Api {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
 
+
+  // changeLikeCardStatus(cardId, like) {
+  //   if (like) {
+  //     return this.request(`/cards/likes/${cardId}`, "PUT");
+  //   }
+  //   else {
+  //     return this.request(`/cards/likes/${cardId}`, "DELETE");
+  //   }
+  // }
+  addLike(cardId) {
+    return this.request(`/cards/likes/${cardId}`, "PUT");
+  }
+
+  removeLike(cardId) {
+    return this.request(`/cards/likes/${cardId}`, "DELETE");
+  }
+
+
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
       headers: this.options.headers,

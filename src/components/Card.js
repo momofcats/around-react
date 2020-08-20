@@ -15,6 +15,10 @@ function Card(props) {
 	function handleClick() {
 		props.onCardClick(card);
 	}
+
+	function handleLikeClick() {
+		props.onCardLike(card);
+	}
 	return (
 		<li className="card">
 			{isOwner ? (
@@ -34,7 +38,7 @@ function Card(props) {
 			<div className="card__description-wrapper">
 				<h2 className="card__title">{card.name}</h2>
 				<div className="card__likes-container">
-					<button className={`${cardLikeButtonClassName} button `}></button>
+					<button className={`${cardLikeButtonClassName} button `} onClick={handleLikeClick}></button>
 					<p className="card__likes">{card.likes.length}</p>
 				</div>
 			</div>
