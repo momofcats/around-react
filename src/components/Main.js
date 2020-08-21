@@ -15,15 +15,22 @@ function Main(props) {
 
 		if (isLiked) {
 			api.removeLike(card._id).then((newCard) => {
-			const	newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+				const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
 				setCards(newCards);
 			});
 		} else {
 			api.addLike(card._id).then((newCard) => {
-			const	newCards = cards.map((c) => (c._id === card._id ? newCard : c));
+				const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
 				setCards(newCards);
 			});
 		}
+	}
+
+	function handleCardDelete(card) {
+		api.delCard(card._id).then((res) => {
+			const newCards = cards.filter((c) => c._id !== card._id);
+			setCards(newCards);
+		});
 	}
 
 	useEffect(() => {
@@ -71,7 +78,7 @@ function Main(props) {
 					<Card
 						key={id}
 						card={card}
-						onDelete={props.onDeleteCard}
+						onCardDelete={handleCardDelete}
 						onCardClick={props.onCardClick}
 						onCardLike={handleCardLike}
 					/>

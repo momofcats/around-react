@@ -19,13 +19,18 @@ function Card(props) {
 	function handleLikeClick() {
 		props.onCardLike(card);
 	}
+
+	function handleDeleteClick() {
+		props.onCardDelete(card);
+	}
+	
 	return (
 		<li className="card">
 			{isOwner ? (
 				<button
 					type="button"
 					className="button card__del"
-					onClick={props.onDelete}
+					onClick={handleDeleteClick}
 				></button>
 			) : (
 				""

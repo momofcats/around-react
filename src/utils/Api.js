@@ -33,6 +33,9 @@ class Api {
     return this.request(`/cards/likes/${cardId}`, "DELETE");
   }
 
+  delCard(cardId) {
+    return this.request(`/cards/${cardId}`, "DELETE");
+  }
 
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
