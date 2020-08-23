@@ -3,6 +3,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -14,7 +15,7 @@ function App() {
 	const [isDelCardPopupOpen, setIsDelCardPopupOpen] = useState(false);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
-	const [currentUser, setCurrentUser] = useState("");
+	const [currentUser, setCurrentUser] = useState({});
 
 	useEffect(() => {
 		api.getUserInfo().then((data) => {
@@ -58,6 +59,13 @@ function App() {
 		}
 	}
 
+	function handleUpdateUser(user) {
+		api.updateUserInfo(user).then((res) => {
+			setCurrentUser(res);
+		});
+		closeAllPopups();
+	}
+
 	useEffect(() => {
 		document.addEventListener("keydown", handleEscKey);
 
@@ -78,33 +86,8 @@ function App() {
 					onCardClick={handleCardClick}
 				/>
 				<Footer />
-				<PopupWithForm
-					name="profile"
-					title="Edit profile"
-					buttonText="Save"
-					isOpen={isEditProfilePopupOpen}
-					onClose={closeAllPopups}
-				>
-					<input
-						required
-						pattern="[a-zA-Z\s\-]+"
-						type="text"
-						className="form__input js-input-name"
-						name="name"
-						placeholder="Name"
-						minLength="2"
-						maxLength="40"
-					/>
-					<input
-						required
-						type="text"
-						className="form__input js-input-job"
-						name="about"
-						placeholder="About me"
-						minLength="2"
-						maxLength="200"
-					/>
-				</PopupWithForm>
+				<EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+				
 				<PopupWithForm
 					name="photo-form"
 					title="New Place"

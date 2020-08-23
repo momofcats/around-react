@@ -37,6 +37,17 @@ class Api {
     return this.request(`/cards/${cardId}`, "DELETE");
   }
 
+  updateUserInfo(formData) {
+    return this.request(
+      "/users/me",
+      "PATCH",
+      JSON.stringify({
+        name: formData.name,
+        about: formData.about,
+      })
+    );
+  }
+
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
       headers: this.options.headers,
