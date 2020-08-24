@@ -16,15 +16,6 @@ class Api {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
 
-
-  // changeLikeCardStatus(cardId, like) {
-  //   if (like) {
-  //     return this.request(`/cards/likes/${cardId}`, "PUT");
-  //   }
-  //   else {
-  //     return this.request(`/cards/likes/${cardId}`, "DELETE");
-  //   }
-  // }
   addLike(cardId) {
     return this.request(`/cards/likes/${cardId}`, "PUT");
   }
@@ -47,6 +38,15 @@ class Api {
       })
     );
   }
+
+  updateAvatar(formData) {
+    return this.request(
+      "/users/me/avatar",
+      "PATCH",
+      JSON.stringify({ avatar: formData.avatar })
+    );
+  }
+
 
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {

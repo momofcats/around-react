@@ -36,7 +36,7 @@ function Main(props) {
 	useEffect(() => {
 		api.getInitialCards().then((cards) => {
 			setCards(cards);
-		});
+		}).catch(console.log);
 	}, []);
 
 	return (

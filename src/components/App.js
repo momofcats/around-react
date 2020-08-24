@@ -4,6 +4,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -20,7 +21,7 @@ function App() {
 	useEffect(() => {
 		api.getUserInfo().then((data) => {
 			setCurrentUser(data);
-		});
+		}).catch(console.log);
 	}, []);
 
 	function handleCardClick(card) {
@@ -62,7 +63,17 @@ function App() {
 	function handleUpdateUser(user) {
 		api.updateUserInfo(user).then((res) => {
 			setCurrentUser(res);
-		});
+		}).catch(console.log);
+		closeAllPopups();
+	}
+
+	function handleUpdateAvatar(avatarUrl) {
+		api
+			.updateAvatar(avatarUrl)
+			.then((res) => {
+				setCurrentUser(res);
+			})
+			.catch(console.log);
 		closeAllPopups();
 	}
 
@@ -86,8 +97,12 @@ function App() {
 					onCardClick={handleCardClick}
 				/>
 				<Footer />
-				<EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-				
+				<EditProfilePopup
+					isOpen={isEditProfilePopupOpen}
+					onClose={closeAllPopups}
+					onUpdateUser={handleUpdateUser}
+				/>
+
 				<PopupWithForm
 					name="photo-form"
 					title="New Place"
@@ -112,21 +127,11 @@ function App() {
 						required
 					/>
 				</PopupWithForm>
-				<PopupWithForm
-					name="change-avatar"
-					title="Change profile picture"
-					buttonText="Save"
+				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					onClose={closeAllPopups}
-				>
-					<input
-						type="url"
-						className="form__input js-input-link"
-						name="avatar"
-						placeholder="Url"
-						required
-					/>
-				</PopupWithForm>
+					onUpdateAvatar={handleUpdateAvatar}
+				/>
 				<PopupWithForm
 					name="del-card"
 					title="Are you sure?"
