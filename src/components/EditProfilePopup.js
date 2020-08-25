@@ -8,7 +8,7 @@ function EditProfilePopup(props) {
 	const currentUser = useContext(CurrentUserContext);
 
 	function handleChange(e) {
-    const { name, value } = e.target;
+		const { name, value } = e.target;
 		switch (name) {
 			case "name":
 				setName(value);
@@ -22,21 +22,20 @@ function EditProfilePopup(props) {
 	}
 
 	function handleSubmit(e) {
-		// Prevent the browser from navigating to the form address
 		e.preventDefault();
 		props.onUpdateUser({
 			name,
 			about: description,
-    });
-  }
+		});
+	}
 
 	useEffect(() => {
-    if (currentUser.name) {
-      setName(currentUser.name);
-    }
-    if (currentUser.about) {
-      setDescription(currentUser.about);
-    }
+		if (currentUser.name) {
+			setName(currentUser.name);
+		}
+		if (currentUser.about) {
+			setDescription(currentUser.about);
+		}
 	}, [currentUser]);
 
 	return (

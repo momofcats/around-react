@@ -1,43 +1,10 @@
-import React, { useState, useEffect } from "react";
-import api from "../utils/Api";
+import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
 	const currentUser = React.useContext(CurrentUserContext);
-	const [cards, setCards] = useState([]);
-
-	function handleCardLike(card) {
-		// Check one more time if this card was already liked
-		const isLiked = card.likes.some((i) => i._id === currentUser._id);
-
-		// Send a request to the API and getting the updated card data
-
-		if (isLiked) {
-			api.removeLike(card._id).then((newCard) => {
-				const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-				setCards(newCards);
-			});
-		} else {
-			api.addLike(card._id).then((newCard) => {
-				const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-				setCards(newCards);
-			});
-		}
-	}
-
-	function handleCardDelete(card) {
-		api.delCard(card._id).then((res) => {
-			const newCards = cards.filter((c) => c._id !== card._id);
-			setCards(newCards);
-		});
-	}
-
-	useEffect(() => {
-		api.getInitialCards().then((cards) => {
-			setCards(cards);
-		}).catch(console.log);
-	}, []);
+	
 
 	return (
 		<main>
@@ -74,13 +41,13 @@ function Main(props) {
 				></button>
 			</section>
 			<ul className="gallery page__section">
-				{cards.map((card, id) => (
+				{props.cards.map((card, id) => (
 					<Card
 						key={id}
 						card={card}
-						onCardDelete={handleCardDelete}
+						onCardDelete={props.onCardDelete}
 						onCardClick={props.onCardClick}
-						onCardLike={handleCardLike}
+						onCardLike={props.onCardLike}
 					/>
 				))}
 			</ul>

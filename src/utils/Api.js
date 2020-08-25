@@ -47,6 +47,16 @@ class Api {
     );
   }
 
+  postNewCard(formData) {
+    return this.request(
+      "/cards/",
+      "POST",
+      JSON.stringify({
+        name: formData.name,
+        link: formData.link,
+      })
+    );
+  }
 
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
