@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -14,7 +13,6 @@ function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-	const [isDelCardPopupOpen, setIsDelCardPopupOpen] = useState(false);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
@@ -62,9 +60,9 @@ function App() {
 		setIsImagePopupOpen(true);
 	}
 
-	function handleDelCardClick() {
-		setIsDelCardPopupOpen(true);
-	}
+	// function handleDelCardClick() {
+	// 	setIsDelCardPopupOpen(true);
+	// }
 
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -82,7 +80,6 @@ function App() {
 		setIsEditAvatarPopupOpen(false);
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
-		setIsDelCardPopupOpen(false);
 		setIsImagePopupOpen(false);
 		setSelectedCard(0);
 	}
@@ -147,7 +144,6 @@ function App() {
 					onEditProfile={handleEditProfileClick}
 					onAddPlace={handleAddPlaceClick}
 					onEditAvatar={handleEditAvatarClick}
-					onDeleteCard={handleDelCardClick}
 					onCardClick={handleCardClick}
 					cards={cards}
 					onCardDelete={handleCardDelete}
@@ -164,18 +160,10 @@ function App() {
 					onClose={closeAllPopups}
 					onAddPlace={handleAddPlaceSubmit}
 				/>
-
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					onClose={closeAllPopups}
 					onUpdateAvatar={handleUpdateAvatar}
-				/>
-				<PopupWithForm
-					name="del-card"
-					title="Are you sure?"
-					buttonText="Yes"
-					isOpen={isDelCardPopupOpen}
-					onClose={closeAllPopups}
 				/>
 				<ImagePopup
 					isOpen={isImagePopupOpen}
