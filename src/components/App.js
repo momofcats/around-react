@@ -9,6 +9,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -139,7 +140,7 @@ function App() {
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
-					<Route path="/main">
+					<ProtectedRoute path="/" loggedIn={loggedIn}>
 						<Main
 						onEditProfile={handleEditProfileClick}
 						onAddPlace={handleAddPlaceClick}
@@ -149,7 +150,7 @@ function App() {
 						onCardDelete={handleCardDelete}
 						onCardLike={handleCardLike}
 					/>
-					</Route>
+					</ProtectedRoute>
 					<Route path="/signup">
 						<Register />
 					</Route>
@@ -157,7 +158,7 @@ function App() {
 						<Login />
 					</Route>
 					<Route exact path="/">
-						{loggedIn ? <Redirect to="/main" /> : <Redirect to="/signin" />}
+						{loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
 					</Route>
 				</Switch>
 				<Footer />
