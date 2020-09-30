@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -17,6 +18,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -59,10 +61,6 @@ function App() {
 		setSelectedCard(card);
 		setIsImagePopupOpen(true);
 	}
-
-	// function handleDelCardClick() {
-	// 	setIsDelCardPopupOpen(true);
-	// }
 
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
@@ -140,15 +138,28 @@ function App() {
 		<>
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
-				<Main
-					onEditProfile={handleEditProfileClick}
-					onAddPlace={handleAddPlaceClick}
-					onEditAvatar={handleEditAvatarClick}
-					onCardClick={handleCardClick}
-					cards={cards}
-					onCardDelete={handleCardDelete}
-					onCardLike={handleCardLike}
-				/>
+				<Switch>
+					<Route path="/main">
+						<Main
+						onEditProfile={handleEditProfileClick}
+						onAddPlace={handleAddPlaceClick}
+						onEditAvatar={handleEditAvatarClick}
+						onCardClick={handleCardClick}
+						cards={cards}
+						onCardDelete={handleCardDelete}
+						onCardLike={handleCardLike}
+					/>
+					</Route>
+					<Route path="/signup">
+						<Register />
+					</Route>
+					<Route path="/signin">
+						<Login />
+					</Route>
+					<Route exact path="/">
+						{loggedIn ? <Redirect to="/main" /> : <Redirect to="/signin" />}
+					</Route>
+				</Switch>
 				<Footer />
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
