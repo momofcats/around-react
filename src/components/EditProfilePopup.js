@@ -52,7 +52,7 @@ function EditProfilePopup(props) {
 				pattern="[a-zA-Z\s\-]+"
 				type="text"
 				value={name}
-				className="form__input js-input-name"
+				className="form__input form__input_theme_dark js-input-name"
 				name="name"
 				placeholder="Name"
 				onChange={handleChange}
@@ -63,7 +63,7 @@ function EditProfilePopup(props) {
 				required
 				type="text"
 				value={description}
-				className="form__input js-input-job"
+				className="form__input form__input_theme_dark js-input-job"
 				name="about"
 				placeholder="About me"
 				onChange={handleChange}

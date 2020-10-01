@@ -1,5 +1,5 @@
 .form__input_theme_light {
   color: #ccc;
-  border-bottom: 2pz #ccc;
-
+  border-bottom: 2px solid #ccc;
+  background: #000;
 }
