@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import Login from "./Login";
+// import Register from "./Register";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -140,25 +142,21 @@ function App() {
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
-					<ProtectedRoute path="/" loggedIn={loggedIn}>
-						<Main
+					<Route exact path="/">
+					{loggedIn ? <Main 
 						onEditProfile={handleEditProfileClick}
 						onAddPlace={handleAddPlaceClick}
 						onEditAvatar={handleEditAvatarClick}
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardDelete={handleCardDelete}
-						onCardLike={handleCardLike}
-					/>
-					</ProtectedRoute>
-					<Route path="/signup">
+						onCardLike={handleCardLike} /> : <Redirect to="/signin" />}
+					</Route>
+					{/* <Route path="/signup">
 						<Register />
-					</Route>
-					<Route path="/signin">
+					</Route> */}
+					<Route exact path="/signin">
 						<Login />
-					</Route>
-					<Route exact path="/">
-						{loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
 					</Route>
 				</Switch>
 				<Footer />
