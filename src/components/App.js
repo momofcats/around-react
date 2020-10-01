@@ -159,7 +159,8 @@ function App() {
 						<Login />
 					</Route>
 				</Switch>
-				<Footer />
+				{loggedIn && <Footer />}
+				
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
