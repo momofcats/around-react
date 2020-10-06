@@ -1,6 +1,5 @@
 .authentication__link {
-  font-size: 14px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: normal;
+  margin-left: 5px;
+  color: inherit;
+  text-decoration: none;
 }

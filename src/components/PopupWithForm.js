@@ -16,11 +16,12 @@ function PopupWithForm(props) {
 			onClick={handleOverlayClick}
 		>
 			<div className="popup__container popup__container_type_form">
-				{props.isOpen && <button
+			<h2 className="popup__title">{props.title}</h2>
+				<button
 					className="popup__btn-close button"
 					type="button"
 					onClick={props.onClose}
-				></button>}
+				></button>
 				<Form name={props.name} onSubmit={props.onSubmit} />
 			</div>
 		</div>

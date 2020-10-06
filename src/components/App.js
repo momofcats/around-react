@@ -156,7 +156,7 @@ function App() {
 						<Register />
 					</Route> */}
 					<Route exact path="/signin">
-						<Login />
+						<Login title="Log in"/>
 					</Route>
 				</Switch>
 				{loggedIn && <Footer />}

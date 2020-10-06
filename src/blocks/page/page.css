@@ -1,4 +1,5 @@
 @import url('__section/page__section.css');
+@import url('__centered/page__centered.css');
 
 .page {
   margin: 0 auto;
