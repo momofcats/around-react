@@ -8,8 +8,8 @@ function Login() {
       <div className="authentication__container">
         <form>
           <h2 className="form__title form__title_theme_light">Log in</h2>
-          <input className="form__input form__input_theme_light" placeholder="Email" />
-          <input className="form__input form__input_theme_light" placeholder="Password" />
+          <input className="form__input form__input_theme_light" placeholder="Email" type="email" required />
+          <input className="form__input form__input_theme_light" placeholder="Password" type="password" required />
           <button type="submit" className="form__submit-btn form__submit-btn_theme_light">
             Log in
           </button>
