@@ -25,7 +25,7 @@ function AddPlacePopup(props) {
 			<input
 				type="text"
 				ref={nameInput}
-				className="form__input form__input_theme_dark js-input-title"
+				className="form__input js-input-title"
 				name="name"
 				placeholder="Title"
 				minLength="1"
@@ -35,7 +35,7 @@ function AddPlacePopup(props) {
 			<input
 				ref={linkInput}
 				type="url"
-				className="form__input form__input_theme_dark js-input-link"
+				className="form__input js-input-link"
 				name="link"
 				placeholder="Image link"
 				required

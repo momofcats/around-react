@@ -23,7 +23,7 @@ function EditAvatarPopup(props) {
 		>
 			<input
 				type="url"
-				className="form__input form__input_theme_dark js-input-link"
+				className="form__input js-input-link"
 				name="avatar"
 				placeholder="Url"
 				ref={input}

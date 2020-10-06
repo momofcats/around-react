@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "./Form";
 
 function PopupWithForm(props) {
 	function handleOverlayClick(evt) {
@@ -9,33 +10,22 @@ function PopupWithForm(props) {
 
 	return (
 		<div
-			className={`popup popup_background_light js-popup-${props.name} ${
-				props.isOpen ? "popup_role_show" : "popup_role_fade-out"
+			className={`popup js-popup-${props.name} ${
+				props.isOpen ? "popup_role_show popup_background_light" : "popup_role_fade-out"
 			}`}
 			onClick={handleOverlayClick}
 		>
 			<div className="popup__container popup__container_type_form">
-				<button
+				{props.isOpen && <button
 					className="popup__btn-close button"
 					type="button"
 					onClick={props.onClose}
-				></button>
-				<form
-					className="form"
-					action="#"
-					noValidate
-					name={props.name}
-					onSubmit={props.onSubmit}
-				>
-					<h2 className="form__title form__title_theme_dark">{props.title}</h2>
-					{props.children}
-					<button className="form__submit-btn form__submit-btn_theme_dark" type="submit" data-text="Save">
-						{props.buttonText}
-					</button>
-				</form>
+				></button>}
+				<Form name={props.name} onSubmit={props.onSubmit} />
 			</div>
 		</div>
 	);
 }
 
 export default PopupWithForm;
+
