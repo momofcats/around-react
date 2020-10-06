@@ -4,7 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Login from "./Login";
-// import Register from "./Register";
+import Register from "./Register";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -152,9 +152,9 @@ function App() {
 						onCardDelete={handleCardDelete}
 						onCardLike={handleCardLike} /> : <Redirect to="/signin" />}
 					</Route>
-					{/* <Route path="/signup">
-						<Register />
-					</Route> */}
+					<Route path="/signup">
+						<Register title="Sign up"/>
+					</Route>
 					<Route exact path="/signin">
 						<Login title="Log in"/>
 					</Route>

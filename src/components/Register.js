@@ -3,15 +3,15 @@ import Form from "./Form";
 import { Link } from "react-router-dom";
 import "../blocks/authentication/authentication.css";
 
-function Login(props) {
-	return (
+function Register(props) {
+  return (
 		<section className="authentication page__section">
 			<div className="authentication__container">
       <h2 className="authentication__title">{props.title}</h2>
 				<Form
-					name="login"
-					title="Log in"
-					buttonText="Log in"
+					name="register"
+					title="Sing up"
+					buttonText="Sign up"
 				>
 					<input
 						className="form__input form__input_theme_dark"
@@ -27,12 +27,12 @@ function Login(props) {
 					/>
 				</Form>
 				<div className="authentication__nav">
-					<span>Not a member yet?</span>
-					<Link className="authentication__link" to="/signup">Sign up here!</Link>
+					<span>Already a member?</span>
+					<Link className="authentication__link" to="/signin">Login here!</Link>
 				</div>
 			</div>
 		</section>
 	);
 }
 
-export default Login;
+export default Register;
