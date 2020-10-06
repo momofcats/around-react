@@ -9,6 +9,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import InfoToolTip from "./InfoToolTip";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
@@ -21,7 +22,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [loggedIn, setLoggedIn] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -150,7 +151,10 @@ function App() {
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardDelete={handleCardDelete}
-						onCardLike={handleCardLike} /> : <Redirect to="/signin" />}
+						onCardLike={handleCardLike} /> : <Redirect to="/info" />}
+					</Route>
+					<Route path="/info">
+						<InfoToolTip />
 					</Route>
 					<Route path="/signup">
 						<Register title="Sign up"/>
