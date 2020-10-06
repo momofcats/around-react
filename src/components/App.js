@@ -21,7 +21,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(true);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);

@@ -11,22 +11,25 @@ function PopupWithForm(props) {
 	return (
 		<div
 			className={`popup js-popup-${props.name} ${
-				props.isOpen ? "popup_role_show popup_background_light" : "popup_role_fade-out"
+				props.isOpen
+					? "popup_role_show popup_background_light"
+					: "popup_role_fade-out"
 			}`}
 			onClick={handleOverlayClick}
 		>
 			<div className="popup__container popup__container_type_form">
-			<h2 className="popup__title">{props.title}</h2>
+				<h2 className="popup__title">{props.title}</h2>
 				<button
 					className="popup__btn-close button"
 					type="button"
 					onClick={props.onClose}
 				></button>
-				<Form name={props.name} onSubmit={props.onSubmit} />
+				<Form name={props.name} onSubmit={props.onSubmit} buttonText={props.buttonText} >
+					{props.children}
+				</Form>
 			</div>
 		</div>
 	);
 }
 
 export default PopupWithForm;
-
