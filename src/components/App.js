@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -25,7 +25,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(true);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -146,25 +146,27 @@ function App() {
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
-					<Route exact path="/">
-					{loggedIn ? <Main 
+					<ProtectedRoute
+						path="/"
+						loggedIn={loggedIn}
+						component={Main}
 						onEditProfile={handleEditProfileClick}
 						onAddPlace={handleAddPlaceClick}
 						onEditAvatar={handleEditAvatarClick}
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardDelete={handleCardDelete}
-						onCardLike={handleCardLike} /> : <Redirect to="/signin" />}
-					</Route>
+						onCardLike={handleCardLike} 
+					/>
 					<Route path="/signup">
-						<Register title="Sign up"/>
+						<Register title="Sign up" />
 					</Route>
 					<Route exact path="/signin">
-						<Login title="Log in"/>
+						<Login title="Log in" />
 					</Route>
 				</Switch>
 				{loggedIn && <Footer />}
-				
+
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
@@ -185,17 +187,17 @@ function App() {
 					onClose={closeAllPopups}
 					card={selectedCard}
 				/>
-				<InfoToolTip 
-						isOpen={isInfoToolTipOpen}
-						onClose={closeAllPopups}
-						icon={success}
-						text="Success! You have now been registered."
+				<InfoToolTip
+					isOpen={isInfoToolTipOpen}
+					onClose={closeAllPopups}
+					icon={success}
+					text="Success! You have now been registered."
 				/>
-				<InfoToolTip 
-						isOpen={isInfoToolTipOpen}
-						onClose={closeAllPopups}
-						icon={failure}
-						text="Oops, something went wrong! Please try again."
+				<InfoToolTip
+					isOpen={isInfoToolTipOpen}
+					onClose={closeAllPopups}
+					icon={failure}
+					text="Oops, something went wrong! Please try again."
 				/>
 			</CurrentUserContext.Provider>
 		</>
