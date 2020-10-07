@@ -18,6 +18,7 @@ function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+	const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
@@ -154,7 +155,7 @@ function App() {
 						onCardLike={handleCardLike} /> : <Redirect to="/info" />}
 					</Route>
 					<Route path="/info">
-						<InfoToolTip />
+						<InfoToolTip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} />
 					</Route>
 					<Route path="/signup">
 						<Register title="Sign up"/>

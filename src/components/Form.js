@@ -9,7 +9,7 @@ function Form(props) {
 			onSubmit={props.onSubmit}
 		>
 			{props.children}
-			<button
+			{!props.name === "infotooltip" && <button
 				className={`form__submit-btn ${
 					props.name === "login" || props.name === "register"
 						? "form__submit-btn_theme_light"
@@ -19,7 +19,7 @@ function Form(props) {
 				data-text="Save"
 			>
 				{props.buttonText}
-			</button>
+			</button>}
 		</form>
 	);
 }
