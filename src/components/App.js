@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, withRouter, Redirect} from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -25,7 +25,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
-	const [loggedIn, setLoggedIn] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -146,6 +146,12 @@ function App() {
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
+					<Route path="/signin">
+						<Login title="Log in" />
+					</Route>
+					<Route path="/signup">
+						<Register title="Sign up" />
+					</Route>
 					<ProtectedRoute
 						path="/"
 						loggedIn={loggedIn}
@@ -158,12 +164,6 @@ function App() {
 						onCardDelete={handleCardDelete}
 						onCardLike={handleCardLike} 
 					/>
-					<Route path="/signup">
-						<Register title="Sign up" />
-					</Route>
-					<Route exact path="/signin">
-						<Login title="Log in" />
-					</Route>
 				</Switch>
 				{loggedIn && <Footer />}
 
@@ -204,4 +204,4 @@ function App() {
 	);
 }
 
-export default App;
+export default withRouter(App);
