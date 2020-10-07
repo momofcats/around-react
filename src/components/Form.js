@@ -9,7 +9,7 @@ function Form(props) {
 			onSubmit={props.onSubmit}
 		>
 			{props.children}
-			{!props.name === "infotooltip" && <button
+			{props.name && <button
 				className={`form__submit-btn ${
 					props.name === "login" || props.name === "register"
 						? "form__submit-btn_theme_light"

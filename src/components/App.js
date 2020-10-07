@@ -13,12 +13,14 @@ import InfoToolTip from "./InfoToolTip";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
+import success from "../images/success.svg";
+import failure from "../images/faliure.svg";
 
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-	const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
+	const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
@@ -152,10 +154,7 @@ function App() {
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardDelete={handleCardDelete}
-						onCardLike={handleCardLike} /> : <Redirect to="/info" />}
-					</Route>
-					<Route path="/info">
-						<InfoToolTip onClose={closeAllPopups} isOpen={isInfoToolTipOpen} />
+						onCardLike={handleCardLike} /> : <Redirect to="/signin" />}
 					</Route>
 					<Route path="/signup">
 						<Register title="Sign up"/>
@@ -185,6 +184,18 @@ function App() {
 					isOpen={isImagePopupOpen}
 					onClose={closeAllPopups}
 					card={selectedCard}
+				/>
+				<InfoToolTip 
+						isOpen={isInfoToolTipOpen}
+						onClose={closeAllPopups}
+						icon={success}
+						text="Success! You have now been registered."
+				/>
+				<InfoToolTip 
+						isOpen={isInfoToolTipOpen}
+						onClose={closeAllPopups}
+						icon={failure}
+						text="Oops, something went wrong! Please try again."
 				/>
 			</CurrentUserContext.Provider>
 		</>
