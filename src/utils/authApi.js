@@ -3,8 +3,8 @@ class AuthApi {
 		this.options = options;
 	}
 
-	register({ email, password }) {
-		return this.request("/signup", "POST", JSON.stringify({ email, password }));
+	register(credentials) {
+		return this.request("/signup", "POST", JSON.stringify(credentials));
 	}
 
 	request(authApi, method, body) {
@@ -12,19 +12,19 @@ class AuthApi {
 			headers: this.options.headers,
 			method,
 			body,
-		}).then((res) => {
+		}).then(async (res) => {
 			if (res.ok) {
 				return res.json();
 			}
-			return Promise.reject(`Error: ${res.status}`);
+			const body = await res.json();
+			return Promise.reject(body.message);
 		});
 	}
 }
 
 const authApi = new AuthApi({
-	baseUrl: "https://around.nomoreparties.co",
+	baseUrl: "https://register.nomoreparties.co",
 	headers: {
-    authorization: "2ea24103-3839-4671-8e47-57675e6fba9c",
 		"Content-Type": "application/json",
 	},
 });

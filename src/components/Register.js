@@ -7,7 +7,6 @@ import authApi from "../utils/authApi";
 function Register(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [message, setMessage] = useState('');
 	const history = useHistory();
 
 	const resetForm = () => {
@@ -16,16 +15,12 @@ function Register(props) {
 	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		authApi.register(email, password)
-		.then(res => {
-			if(!res || res.statusCode === 400){
-				throw new Error("one of the fields was filled in incorrectly ")
-			}
-			return res;
-		})
+		authApi.register({email, password})
 		.then(resetForm)
 		.then(() => history.push("/signin"))
-		.catch(err => console.log(err))
+		.catch(err => {
+			console.log(err);
+		})
 	};
 	useEffect(() => {
 		if(localStorage.getItem('jwt')){
