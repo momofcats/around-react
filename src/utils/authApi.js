@@ -17,7 +17,7 @@ class AuthApi {
 				return res.json();
 			}
 			const body = await res.json();
-			return Promise.reject(body.message);
+			return Promise.reject(body.error || body.message);
 		});
 	}
 }
