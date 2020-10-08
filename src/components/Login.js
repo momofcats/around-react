@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import Form from "./Form";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../blocks/authentication/authentication.css";
+import authApi from "../utils/authApi";
 
 function Login(props) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const history = useHistory();
 	return (
 		<section className="authentication page__section">
 			<div className="authentication__container">
