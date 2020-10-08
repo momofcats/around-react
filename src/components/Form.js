@@ -17,6 +17,7 @@ function Form(props) {
 				}`}
 				type="submit"
 				data-text="Save"
+				onSubmit={props.onSubmit}
 			>
 				{props.buttonText}
 			</button>}
