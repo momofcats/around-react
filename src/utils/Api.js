@@ -60,7 +60,10 @@ class Api {
 
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
-      headers: this.options.headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+        "Content-Type": "application/json",
+      },
       method,
       body,
     })
@@ -74,10 +77,6 @@ class Api {
 }
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/group-2",
-  headers: {
-    authorization: "2ea24103-3839-4671-8e47-57675e6fba9c",
-    "Content-Type": "application/json",
-  },
 });
 
 export default api;

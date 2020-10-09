@@ -8,6 +8,36 @@ function Login(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const history = useHistory();
+
+	const resetForm = () => {
+		setEmail('');
+		setPassword('');
+	}
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if(!email || !password){
+			return;
+		}
+		authApi.authorize({email, password})
+		.then((data) => {
+			 localStorage.setItem('jwt', data.token);
+				props.onLogin();
+		})
+		.then(resetForm)
+		.then(() => history.push("/"))
+		.catch(err => {
+			console.log(err);
+		})
+	};
+
+	useEffect(() => {
+		if(localStorage.getItem('jwt')){
+			props.onLogin();
+			history.push("/");
+		}
+	},[]);
+
 	return (
 		<section className="authentication page__section">
 			<div className="authentication__container">
@@ -16,18 +46,23 @@ function Login(props) {
 					name="login"
 					title="Log in"
 					buttonText="Log in"
+					onSubmit={handleSubmit}
 				>
 					<input
 						className="form__input form__input_theme_dark"
 						placeholder="Email"
 						type="email"
 						required
+						value={email}
+						onChange={e => setEmail(e.target.value)}
 					/>
 					<input
 						className="form__input form__input_theme_dark"
 						placeholder="Password"
 						type="password"
 						required
+						value={password}
+						onChange={e => setPassword(e.target.value)}
 					/>
 				</Form>
 				<div className="authentication__nav">

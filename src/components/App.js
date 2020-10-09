@@ -41,6 +41,9 @@ function App() {
 		}
 	}
 
+	function handleLogin() {
+		setLoggedIn(true);
+	}
 	function setCardsOnLike(cardId, newCard) {
 		const newCards = cards.map((c) => (c._id === cardId ? newCard : c));
 		setCards(newCards);
@@ -116,22 +119,27 @@ function App() {
 	}
 
 	useEffect(() => {
-		api
+		if(loggedIn){
+			api
 			.getUserInfo()
 			.then((data) => {
 				setCurrentUser(data);
 			})
 			.catch(console.log);
-	}, []);
+		}	
+	}, [loggedIn]);
 
 	useEffect(() => {
-		api
+		if(loggedIn){
+			api
 			.getInitialCards()
 			.then((cards) => {
 				setCards(cards);
 			})
 			.catch(console.log);
-	}, []);
+		}
+		
+	}, [loggedIn]);
 
 	useEffect(() => {
 		document.addEventListener("keydown", handleEscKey);
@@ -147,7 +155,7 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
 					<Route path="/signin">
-						<Login title="Log in" />
+						<Login onLogin={handleLogin} title="Log in" />
 					</Route>
 					<Route path="/signup">
 						<Register title="Sign up" />
