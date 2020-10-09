@@ -10,6 +10,11 @@ class AuthApi {
 	authorize(credentials) {
 		return this.request("/signin", "POST", JSON.stringify(credentials))
 	}
+
+	getContent() {
+		return this.request("users/me");
+	}
+	
 	request(authApi, method, body) {
 		return fetch(`${this.options.baseUrl}${authApi}`, {
 			headers: this.options.headers,

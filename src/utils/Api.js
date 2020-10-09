@@ -61,7 +61,7 @@ class Api {
   request(api, method, body) {
     return fetch(`${this.options.baseUrl}${api}`, {
       headers: {
-        "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+        "Authorization" : '2ea24103-3839-4671-8e47-57675e6fba9c',
         "Content-Type": "application/json",
       },
       method,
