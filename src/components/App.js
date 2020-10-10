@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, withRouter, Redirect} from "react-router-dom";
+import {
+	Route,
+	Switch,
+	withRouter,
+	useHistory, 
+	Redirect
+} from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -15,6 +21,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import ProtectedRoute from "./ProtectedRoute";
 import success from "../images/success.svg";
 import failure from "../images/faliure.svg";
+import authApi from "../utils/authApi";
 
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -26,6 +33,9 @@ function App() {
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [userEmail, setUserEmail] = useState('');
+	const [isLoading, setIsLoading] = useState(true);
+	const history = useHistory();
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -119,26 +129,41 @@ function App() {
 	}
 
 	useEffect(() => {
-		if(loggedIn){
+		let jwt = localStorage.getItem("jwt");
+		if (jwt) {
+			authApi.getContent(jwt).then((res) => {
+				if (res) {
+					setIsLoading(false);
+					setLoggedIn(true);
+					setUserEmail(res.email);
+					history.push("/");
+				}
+			});
+		} else {
+			setIsLoading(false);
+		}
+	}, [history]);
+
+	useEffect(() => {
+		if (loggedIn) {
 			api
-			.getUserInfo()
-			.then((data) => {
-				setCurrentUser(data);
-			})
-			.catch(console.log);
-		}	
+				.getUserInfo()
+				.then((data) => {
+					setCurrentUser(data);
+				})
+				.catch(console.log);
+		}
 	}, [loggedIn]);
 
 	useEffect(() => {
-		if(loggedIn){
+		if (loggedIn) {
 			api
-			.getInitialCards()
-			.then((cards) => {
-				setCards(cards);
-			})
-			.catch(console.log);
+				.getInitialCards()
+				.then((cards) => {
+					setCards(cards);
+				})
+				.catch(console.log);
 		}
-		
 	}, [loggedIn]);
 
 	useEffect(() => {
@@ -149,7 +174,10 @@ function App() {
 		};
 	});
 
-	return (
+	if(isLoading) {
+		return null;
+	}
+	return  (
 		<>
 			<Header />
 			<CurrentUserContext.Provider value={currentUser}>
@@ -161,6 +189,7 @@ function App() {
 						<Register title="Sign up" />
 					</Route>
 					<ProtectedRoute
+						exact
 						path="/"
 						loggedIn={loggedIn}
 						component={Main}
@@ -170,7 +199,7 @@ function App() {
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardDelete={handleCardDelete}
-						onCardLike={handleCardLike} 
+						onCardLike={handleCardLike}
 					/>
 				</Switch>
 				{loggedIn && <Footer />}

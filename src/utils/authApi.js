@@ -11,13 +11,27 @@ class AuthApi {
 		return this.request("/signin", "POST", JSON.stringify(credentials))
 	}
 
-	getContent() {
-		return this.request("users/me");
+	getContent(token) {
+		return fetch('https://register.nomoreparties.co/users/me', {
+			method: 'GET',
+			headers: {
+				"Content-Type": "application/json",
+				'Authorization': `Bearer ${token}`,
+			},
+		}).then(async (res) => {
+			if (res.ok) {
+				return res.json();
+			}
+			const body = await res.json();
+			return Promise.reject(body.error || body.message);
+		});
 	}
 	
 	request(authApi, method, body) {
 		return fetch(`${this.options.baseUrl}${authApi}`, {
-			headers: this.options.headers,
+			headers: {
+				"Content-Type": "application/json",
+			},
 			method,
 			body,
 		}).then(async (res) => {
@@ -29,12 +43,8 @@ class AuthApi {
 		});
 	}
 }
-
 const authApi = new AuthApi({
 	baseUrl: "https://register.nomoreparties.co",
-	headers: {
-		"Content-Type": "application/json",
-	},
 });
 
 export default authApi;

@@ -33,7 +33,6 @@ function Login(props) {
 
 	useEffect(() => {
 		if(localStorage.getItem('jwt')){
-			props.onLogin();
 			history.push("/");
 		}
 	},[]);
