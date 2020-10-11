@@ -3,8 +3,7 @@ import {
 	Route,
 	Switch,
 	withRouter,
-	useHistory, 
-	Redirect
+	useHistory, useLocation
 } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
@@ -36,6 +35,13 @@ function App() {
 	const [userEmail, setUserEmail] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
 	const history = useHistory();
+	const location = useLocation();
+
+	function logOut() {
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+		history.push("/signin");
+	}
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -135,7 +141,7 @@ function App() {
 				if (res) {
 					setIsLoading(false);
 					setLoggedIn(true);
-					setUserEmail(res.email);
+					setUserEmail(res.data.email);
 					history.push("/");
 				}
 			});
@@ -179,7 +185,7 @@ function App() {
 	}
 	return  (
 		<>
-			<Header />
+			<Header onLogOut={logOut} loggedIn={loggedIn} userEmail={userEmail} route={location.pathname}/>
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
 					<Route path="/signin">

@@ -1,23 +1,18 @@
 import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function NavBar(props) {
-  const history = useHistory();
-	function signOut() {
-    localStorage.removeItem('jwt');
-    history.push("/login");
-	}
 	return (
 		<nav className="menu">
-			<NavLink exact className="menu__item" to="/signin">
+			{props.route === "/signup" && <NavLink className="menu__item" to="/signin">
 				Log in
-			</NavLink>
-			<NavLink exact className="menu__item" to="/signup">
+			</NavLink>}
+			{props.route === "/signin" && <NavLink exact className="menu__item" to="/signup">
 				Sign up
-			</NavLink>
-			<button onClick={signOut} className="menu__item">
+			</NavLink>}
+			{props.loggedIn && <button onClick={props.onLogOut} className="menu__item button">
 				Log out
-			</button>
+			</button>}
 		</nav>
 	);
 }
