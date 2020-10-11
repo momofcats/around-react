@@ -46,7 +46,8 @@ function App() {
 	function handleRegisterFail() {
 		setIsFailPopupOpen(true);
 	}
-	function logOut() {
+
+	function handleLogOut() {
 		localStorage.removeItem("jwt");
 		setLoggedIn(false);
 		history.push("/signin");
@@ -197,7 +198,7 @@ function App() {
 	return (
 		<>
 			<Header
-				onLogOut={logOut}
+				onLogOut={handleLogOut}
 				loggedIn={loggedIn}
 				userEmail={userEmail}
 				route={location.pathname}
@@ -207,12 +208,12 @@ function App() {
 					<Route path="/signin">
 						<Login onLogin={handleLogin} title="Log in" />
 					</Route>
-					<Route
-						path="/signup"
-						
-					>
-						<Register title="Sign up" onSuccess={handleRegisterSuccess}
-						onFail={handleRegisterFail} />
+					<Route path="/signup">
+						<Register
+							title="Sign up"
+							onSuccess={handleRegisterSuccess}
+							onFail={handleRegisterFail}
+						/>
 					</Route>
 					<ProtectedRoute
 						exact
