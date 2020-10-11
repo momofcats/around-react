@@ -8,7 +8,7 @@
 
 ## Github pages link
 
-[Link to Github pages](https://momofcats.github.io/around-react/build/index.html)
+[Link to Github pages](https://momofcats.github.io/around-react)
 
 ## Figma
 
