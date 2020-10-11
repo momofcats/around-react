@@ -67,7 +67,8 @@ function App() {
 		}
 	}
 
-	function handleLogin() {
+	function handleLogin(email) {
+		setUserEmail(email);
 		setLoggedIn(true);
 	}
 	function setCardsOnLike(cardId, newCard) {
@@ -147,18 +148,20 @@ function App() {
 	}
 
 	useEffect(() => {
-		let jwt = localStorage.getItem("jwt");
-		if (jwt) {
-			authApi.getContent(jwt).then((res) => {
-				if (res) {
-					setIsLoading(false);
-					setLoggedIn(true);
-					setUserEmail(res.data.email);
-					history.push("/");
-				}
-			});
-		} else {
-			setIsLoading(false);
+		if (!loggedIn) {
+			let jwt = localStorage.getItem("jwt");
+			if (jwt) {
+				authApi.getContent(jwt).then((res) => {
+					if (res) {
+						setIsLoading(false);
+						setLoggedIn(true);
+						setUserEmail(res.data.email);
+						history.push("/");
+					}
+				});
+			} else {
+				setIsLoading(false);
+			}
 		}
 	}, [history, loggedIn]);
 

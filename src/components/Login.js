@@ -23,7 +23,7 @@ function Login(props) {
 			.authorize({ email, password })
 			.then((data) => {
 				localStorage.setItem("jwt", data.token);
-				props.onLogin();
+				props.onLogin(email);
 			})
 			.then(resetForm)
 			.then(() => history.push("/"))
