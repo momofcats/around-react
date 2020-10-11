@@ -1,22 +1,57 @@
 import React, { useState, useEffect } from "react";
+import {
+	Route,
+	Switch,
+	withRouter,
+	useHistory,
+	useLocation,
+} from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import Login from "./Login";
+import Register from "./Register";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import InfoToolTip from "./InfoToolTip";
 import api from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import ProtectedRoute from "./ProtectedRoute";
+import success from "../images/success.svg";
+import failure from "../images/faliure.svg";
+import authApi from "../utils/authApi";
 
 function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+	const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+	const [isFailPopupOpen, setIsFailPopupOpen] = useState(false);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [userEmail, setUserEmail] = useState("");
+	const [isLoading, setIsLoading] = useState(true);
+	const history = useHistory();
+	const location = useLocation();
+
+	function handleRegisterSuccess() {
+		setIsSuccessPopupOpen(true);
+	}
+
+	function handleRegisterFail() {
+		setIsFailPopupOpen(true);
+	}
+
+	function handleLogOut() {
+		localStorage.removeItem("jwt");
+		setLoggedIn(false);
+		history.push("/signin");
+	}
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -32,6 +67,9 @@ function App() {
 		}
 	}
 
+	function handleLogin() {
+		setLoggedIn(true);
+	}
 	function setCardsOnLike(cardId, newCard) {
 		const newCards = cards.map((c) => (c._id === cardId ? newCard : c));
 		setCards(newCards);
@@ -60,10 +98,6 @@ function App() {
 		setIsImagePopupOpen(true);
 	}
 
-	// function handleDelCardClick() {
-	// 	setIsDelCardPopupOpen(true);
-	// }
-
 	function handleEditAvatarClick() {
 		setIsEditAvatarPopupOpen(true);
 	}
@@ -81,6 +115,8 @@ function App() {
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
 		setIsImagePopupOpen(false);
+		setIsFailPopupOpen(false);
+		setIsSuccessPopupOpen(false);
 		setSelectedCard(0);
 	}
 
@@ -111,22 +147,42 @@ function App() {
 	}
 
 	useEffect(() => {
-		api
-			.getUserInfo()
-			.then((data) => {
-				setCurrentUser(data);
-			})
-			.catch(console.log);
-	}, []);
+		let jwt = localStorage.getItem("jwt");
+		if (jwt) {
+			authApi.getContent(jwt).then((res) => {
+				if (res) {
+					setIsLoading(false);
+					setLoggedIn(true);
+					setUserEmail(res.data.email);
+					history.push("/");
+				}
+			});
+		} else {
+			setIsLoading(false);
+		}
+	}, [history, loggedIn]);
 
 	useEffect(() => {
-		api
-			.getInitialCards()
-			.then((cards) => {
-				setCards(cards);
-			})
-			.catch(console.log);
-	}, []);
+		if (loggedIn) {
+			api
+				.getUserInfo()
+				.then((data) => {
+					setCurrentUser(data);
+				})
+				.catch(console.log);
+		}
+	}, [loggedIn]);
+
+	useEffect(() => {
+		if (loggedIn) {
+			api
+				.getInitialCards()
+				.then((cards) => {
+					setCards(cards);
+				})
+				.catch(console.log);
+		}
+	}, [loggedIn]);
 
 	useEffect(() => {
 		document.addEventListener("keydown", handleEscKey);
@@ -136,20 +192,45 @@ function App() {
 		};
 	});
 
+	if (isLoading) {
+		return null;
+	}
 	return (
 		<>
-			<Header />
+			<Header
+				onLogOut={handleLogOut}
+				loggedIn={loggedIn}
+				userEmail={userEmail}
+				route={location.pathname}
+			/>
 			<CurrentUserContext.Provider value={currentUser}>
-				<Main
-					onEditProfile={handleEditProfileClick}
-					onAddPlace={handleAddPlaceClick}
-					onEditAvatar={handleEditAvatarClick}
-					onCardClick={handleCardClick}
-					cards={cards}
-					onCardDelete={handleCardDelete}
-					onCardLike={handleCardLike}
-				/>
-				<Footer />
+				<Switch>
+					<Route path="/signin">
+						<Login onLogin={handleLogin} title="Log in" />
+					</Route>
+					<Route path="/signup">
+						<Register
+							title="Sign up"
+							onSuccess={handleRegisterSuccess}
+							onFail={handleRegisterFail}
+						/>
+					</Route>
+					<ProtectedRoute
+						exact
+						path="/"
+						loggedIn={loggedIn}
+						component={Main}
+						onEditProfile={handleEditProfileClick}
+						onAddPlace={handleAddPlaceClick}
+						onEditAvatar={handleEditAvatarClick}
+						onCardClick={handleCardClick}
+						cards={cards}
+						onCardDelete={handleCardDelete}
+						onCardLike={handleCardLike}
+					/>
+				</Switch>
+				{loggedIn && <Footer />}
+
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
@@ -170,9 +251,21 @@ function App() {
 					onClose={closeAllPopups}
 					card={selectedCard}
 				/>
+				<InfoToolTip
+					isOpen={isSuccessPopupOpen}
+					onClose={closeAllPopups}
+					icon={success}
+					text="Success! You have now been registered."
+				/>
+				<InfoToolTip
+					isOpen={isFailPopupOpen}
+					onClose={closeAllPopups}
+					icon={failure}
+					text="Oops, something went wrong! Please try again."
+				/>
 			</CurrentUserContext.Provider>
 		</>
 	);
 }
 
-export default App;
+export default withRouter(App);
