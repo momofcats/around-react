@@ -36,7 +36,7 @@ function Login(props) {
 		if (localStorage.getItem("jwt")) {
 			history.push("/");
 		}
-	}, []);
+	}, [history]);
 
 	return (
 		<section className="authentication page__section">
