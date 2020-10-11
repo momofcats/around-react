@@ -3,7 +3,8 @@ import {
 	Route,
 	Switch,
 	withRouter,
-	useHistory, useLocation
+	useHistory,
+	useLocation,
 } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
@@ -26,20 +27,28 @@ function App() {
 	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-	const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
+	const [isSuccessPopupOpen, setIsSuccessPopupOpen] = useState(false);
+	const [isFailPopupOpen, setIsFailPopupOpen] = useState(false);
 	const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 	const [selectedCard, setSelectedCard] = useState(0);
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	const [loggedIn, setLoggedIn] = useState(false);
-	const [userEmail, setUserEmail] = useState('');
+	const [userEmail, setUserEmail] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const history = useHistory();
 	const location = useLocation();
 
+	function handleRegisterSuccess() {
+		setIsSuccessPopupOpen(true);
+	}
+
+	function handleRegisterFail() {
+		setIsFailPopupOpen(true);
+	}
 	function logOut() {
-    localStorage.removeItem('jwt');
-    setLoggedIn(false);
+		localStorage.removeItem("jwt");
+		setLoggedIn(false);
 		history.push("/signin");
 	}
 
@@ -105,6 +114,8 @@ function App() {
 		setIsEditProfilePopupOpen(false);
 		setIsAddPlacePopupOpen(false);
 		setIsImagePopupOpen(false);
+		setIsFailPopupOpen(false);
+		setIsSuccessPopupOpen(false);
 		setSelectedCard(0);
 	}
 
@@ -148,7 +159,7 @@ function App() {
 		} else {
 			setIsLoading(false);
 		}
-	}, [history,loggedIn]);
+	}, [history, loggedIn]);
 
 	useEffect(() => {
 		if (loggedIn) {
@@ -180,19 +191,28 @@ function App() {
 		};
 	});
 
-	if(isLoading) {
+	if (isLoading) {
 		return null;
 	}
-	return  (
+	return (
 		<>
-			<Header onLogOut={logOut} loggedIn={loggedIn} userEmail={userEmail} route={location.pathname}/>
+			<Header
+				onLogOut={logOut}
+				loggedIn={loggedIn}
+				userEmail={userEmail}
+				route={location.pathname}
+			/>
 			<CurrentUserContext.Provider value={currentUser}>
 				<Switch>
 					<Route path="/signin">
 						<Login onLogin={handleLogin} title="Log in" />
 					</Route>
-					<Route path="/signup">
-						<Register title="Sign up" />
+					<Route
+						path="/signup"
+						
+					>
+						<Register title="Sign up" onSuccess={handleRegisterSuccess}
+						onFail={handleRegisterFail} />
 					</Route>
 					<ProtectedRoute
 						exact
@@ -231,13 +251,13 @@ function App() {
 					card={selectedCard}
 				/>
 				<InfoToolTip
-					isOpen={isInfoToolTipOpen}
+					isOpen={isSuccessPopupOpen}
 					onClose={closeAllPopups}
 					icon={success}
 					text="Success! You have now been registered."
 				/>
 				<InfoToolTip
-					isOpen={isInfoToolTipOpen}
+					isOpen={isFailPopupOpen}
 					onClose={closeAllPopups}
 					icon={failure}
 					text="Oops, something went wrong! Please try again."

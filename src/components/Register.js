@@ -8,7 +8,6 @@ function Register(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const history = useHistory();
-
 	const resetForm = () => {
 		setEmail('');
 		setPassword('');
@@ -17,9 +16,13 @@ function Register(props) {
 		e.preventDefault();
 		authApi.register({email, password})
 		.then(resetForm)
-		.then(() => history.push("/signin"))
-		.catch(err => {
+		.then(() => {
+			history.push("/signin");
+			props.onSuccess();
+		})
+		.catch((err) => {
 			console.log(err);
+			props.onFail();
 		})
 	};
 	useEffect(() => {
