@@ -148,7 +148,7 @@ function App() {
 		} else {
 			setIsLoading(false);
 		}
-	}, [history]);
+	}, [history,loggedIn]);
 
 	useEffect(() => {
 		if (loggedIn) {

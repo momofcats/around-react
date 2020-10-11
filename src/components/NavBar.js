@@ -10,9 +10,6 @@ function NavBar(props) {
 			{props.route === "/signin" && <NavLink exact className="menu__item" to="/signup">
 				Sign up
 			</NavLink>}
-			{props.loggedIn && <button onClick={props.onLogOut} className="menu__item button">
-				Log out
-			</button>}
 		</nav>
 	);
 }
